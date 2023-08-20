@@ -1,0 +1,71 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Document</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/dat-gui/0.7.7/dat.gui.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+  </head>
+  <body>
+    <script>
+      // Initialize dat.GUI
+      var gui = new dat.GUI();
+
+      // Example variables to control
+      var parameters = {
+        rotationSpeed: 0.01,
+        boxScale: 1,
+        color: "#ff0000",
+      };
+
+      // Add controls to the GUI
+      gui.add(parameters, "rotationSpeed", 0, 0.1); // Slider for rotation speed
+      gui.add(parameters, "boxScale", 0.1, 2); // Slider for box scale
+      gui.addColor(parameters, "color"); // Color picker for box color
+    </script>
+
+    <script>
+      var scene = new THREE.Scene();
+      var camera = new THREE.PerspectiveCamera(
+        75,
+        window.innerWidth / window.innerHeight,
+        0.1,
+        1000,
+      );
+      var renderer = new THREE.WebGLRenderer();
+      renderer.setSize(window.innerWidth, window.innerHeight);
+      document.body.appendChild(renderer.domElement);
+
+      // ... create objects and setup scene ...
+      // Create a cube
+    var geometry = new THREE.BoxGeometry();
+    var material = new THREE.MeshBasicMaterial({ color: 0x00ff00 });
+    var cube = new THREE.Mesh(geometry, material);
+    scene.add(cube);
+
+    // Position the camera
+    camera.position.z = 5;
+
+      // Update function to animate scene based on GUI controls
+      function animate() {
+        // Update rotation based on GUI control
+        cube.rotation.x += parameters.rotationSpeed;
+        cube.rotation.y += parameters.rotationSpeed;
+
+        // Update scale based on GUI control
+        cube.scale.set(
+          parameters.boxScale,
+          parameters.boxScale,
+          parameters.boxScale,
+        );
+
+        // Update color based on GUI control
+        cube.material.color.set(parameters.color);
+
+        renderer.render(scene, camera);
+        requestAnimationFrame(animate);
+      }
+      animate();
+    </script>
+  </body>
+</html>
