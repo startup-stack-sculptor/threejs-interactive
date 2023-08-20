@@ -1,3 +1,11 @@
 ** Three Js Interactive
 
 No need to use bloated 3d engine
+
+** Accomplishment
+Using dat.gui js to control javascript variables. It can fully replace a game engine inspector.
+
+- rotationSpeed
+- boxScale
+- color
+working for now.
